@@ -17,13 +17,6 @@ public class Board extends JPanel
         y = 0;
         this.mapFile = mapFile;
         loadImage(this.mapFile);
-//        setSize(new Dimension(loadedImage.getWidth(this), loadedImage.getHeight(this)));
-//        paint(loadedImage.getGraphics());
-//        setVisible(true);
-//        System.out.println("w: " + loadedImage.getWidth() + " h: " + loadedImage.getHeight());
-//
-//        System.out.println(this.getWidth());
-//        System.out.println(this.getHeight());
         setPreferredSize(new Dimension(getLoadedImage().getWidth(this), getLoadedImage().getHeight(this)));
         setVisible(true);
     }

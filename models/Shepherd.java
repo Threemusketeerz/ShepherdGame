@@ -14,7 +14,8 @@ public class Shepherd
     {
         this.x = board.getW() / 2;
         this.y = board.getY() / 2;
-        camera = new Camera(x, y, board.getW(), board.getH());
+        camera = new Camera(x, y, board.getW(), board.getH(),
+                800,800, board);
     }
 
     public Shepherd(int x, int y, Board board)
@@ -22,11 +23,13 @@ public class Shepherd
         this.x = x;
         this.y = y;
         this.board = board;
-        camera = new Camera(x, y, board.getW(), board.getH());
+//        camera = new Camera(x, y, board.getW(), board.getH());
     }
 
     public int getX() { return x; }
     public int getY() { return y; }
     public Image getImage() { return image; }
+    public Board getBoard() { return board; }
+    public Camera getCamera() { return camera; }
 
 }

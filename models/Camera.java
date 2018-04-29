@@ -1,15 +1,97 @@
+import java.awt.*;
+import java.awt.image.*;
+import javax.swing.*;
+import javax.imageio.*;
+import java.io.IOException;
 
-public class Camera
+public class Camera extends JPanel
 {
     private int playerX, playerY;
     private int worldSizeW, worldSizeH;
+    private int cameraX, cameraY, cameraWidth, cameraHeight;
+    private int offsetX, offsetY;
+    private Image view;
+    private Board board;
 
     public Camera(int playerX, int playerY,
-                  int worldSizeW, int worldSizeH)
+                  int worldSizeW, int worldSizeH,
+                  int cameraWidth, int cameraHeight,
+                  Board board)
     {
-        this.playerX = playerX;
-        this.playerY = playerY;
+        this.board = board;
+
+        // How much of a view do we have?
+        this.cameraWidth = cameraWidth;
+        this.cameraHeight = cameraHeight;
+
+        // Offset til center player in camera view.
+        calculateOffset();
+
+        // set Camera limits.
         this.worldSizeW = worldSizeW;
         this.worldSizeH = worldSizeH;
+
+
+        view = board.getLoadedImage();
+
+        calculatePosition(playerX, playerY);
+
+        setPreferredSize(new Dimension(cameraWidth, cameraHeight));
     }
+
+    private void calculateOffset()
+    {
+        int tempOffsetX = cameraWidth / 2;
+        int tempOffsetY = cameraHeight / 2;
+        int boardWidth = board.getLoadedImage().getWidth();
+        int boardHeight = board.getLoadedImage().getHeight();
+
+        if (tempOffsetX < 0)
+            offsetX = 0;
+        else if (tempOffsetX > boardWidth)
+            offsetX -= board.getLoadedImage().getWidth();
+        else
+            offsetX = tempOffsetX;
+
+        if (tempOffsetY < 0)
+            offsetY = 0;
+        else if(tempOffsetY > boardHeight)
+            offsetY -= boardHeight;
+        else
+            offsetY = tempOffsetY;
+
+    }
+
+
+    private void calculatePosition(int playerX, int playerY)
+    {
+        calculateOffset();
+        int tempCameraX = playerX - offsetX;
+        int tempCameraY = playerY - offsetY;
+
+        int boardWidth = board.getLoadedImage().getWidth();
+        int boardHeight = board.getLoadedImage().getHeight();
+        if(tempCameraX < 0)
+            cameraX = 0;
+        else if (tempCameraX > boardWidth - offsetX)
+            cameraX = boardWidth - offsetX;
+        else
+            cameraX = playerX - offsetX;
+
+        if (tempCameraY < 0)
+            cameraY = 0;
+        else if (tempCameraY > boardHeight - offsetY)
+            cameraY = boardHeight - offsetY;
+        else
+            cameraY = playerY - offsetY;
+
+        view = board.getLoadedImage().getSubimage(cameraX, cameraY, cameraWidth, cameraHeight);
+    }
+
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        g.drawImage(view, 0, 0, this);
+    }
+
 }
