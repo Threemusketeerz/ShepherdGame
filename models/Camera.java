@@ -25,18 +25,22 @@ public class Camera extends JPanel
         this.cameraHeight = cameraHeight;
 
         // Offset til center player in camera view.
-        calculateOffset();
 
         // set Camera limits.
         this.worldSizeW = worldSizeW;
         this.worldSizeH = worldSizeH;
 
 
-        view = board.getLoadedImage();
+//        view = board.getLoadedImage();
 
-        calculatePosition(playerX, playerY);
-
+        update(playerX, playerY);
         setPreferredSize(new Dimension(cameraWidth, cameraHeight));
+    }
+
+    public void update(int playerX, int playerY)
+    {
+        calculateOffset();
+        calculatePosition(playerX, playerY);
     }
 
     private void calculateOffset()
@@ -92,7 +96,7 @@ public class Camera extends JPanel
             cameraY = playerY - offsetY;
 
         view = board.getLoadedImage().getSubimage(cameraX, cameraY, cameraWidth, cameraHeight);
-        view = view.getScaledInstance(600, 600, 0);
+//        view = view.getScaledInstance(600, 600, Image.SCALE_SMOOTH);
     }
 
     @Override
