@@ -15,7 +15,7 @@ public class Shepherd
         this.x = board.getW() / 2;
         this.y = board.getY() / 2;
         camera = new Camera(x, y, board.getW(), board.getH(),
-                800,800, board);
+                300,300, board);
     }
 
     public Shepherd(int x, int y, Board board)

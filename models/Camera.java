@@ -63,6 +63,12 @@ public class Camera extends JPanel
     }
 
 
+    /**
+     * Calculates the position of the camera in relativity to the board.
+     * It ensures that BufferedImage.subImage(...) does not fail
+     * @param playerX   The X position of the player.
+     * @param playerY   the Y position of the player.
+     */
     private void calculatePosition(int playerX, int playerY)
     {
         calculateOffset();
@@ -86,6 +92,7 @@ public class Camera extends JPanel
             cameraY = playerY - offsetY;
 
         view = board.getLoadedImage().getSubimage(cameraX, cameraY, cameraWidth, cameraHeight);
+        view = view.getScaledInstance(600, 600, 0);
     }
 
     @Override
